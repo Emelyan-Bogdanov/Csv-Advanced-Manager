@@ -5,5 +5,11 @@
 {% endblock title %}
 
 {% block content  %}
-    <h1 style="color : red">{{workspace_error}}</h1>
+<form action="/createworkspace" method="post" class="auth">
+        Workspace name : <input type="text" name="workspacename" id="">
+        <br>
+        <span style="color : red;">{{workspace_error}}</span>
+        <br>
+        <input type="submit" value="Create Workspace">
+</form>
 {% endblock content %}

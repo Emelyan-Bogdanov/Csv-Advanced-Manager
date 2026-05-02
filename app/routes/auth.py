@@ -20,7 +20,7 @@ def login():
             if user.verify_password(password) :
                 login_user(user)
                 print("="*50)
-                return redirect(url_for("main.workspace"))
+                return redirect("/workspace")
             else :
                 return render_template("login.html",p_error="password wrong")
     return render_template("login.html")
@@ -40,7 +40,7 @@ def register():
             db.session.commit()
             login_user(new_user,remember=True) #
             if not current_user.hasWorkspace():
-                redirect("main.createworkspace")
+                return redirect(url_for("main.createworkspace"))
         else :
             return render_template("register.html",e_error="User with that email Already exists")
 
