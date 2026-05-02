@@ -1,6 +1,6 @@
 from .extensions import db , loginM
 from flask_login import UserMixin , login_manager
-
+from werkzeug.security import check_password_hash
 
 class User(db.Model,UserMixin):
     __table_name__ = "users"
@@ -18,6 +18,8 @@ class User(db.Model,UserMixin):
     def setWorkspace(self,workspaceName:str):
          self.workspace = workspaceName
 
-    def is_active(self):
-          return self.active
-
+#    def is_active(self):
+#          return self.active
+    
+    def verify_password(self, password):
+          return check_password_hash(self.password, password)
