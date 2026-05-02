@@ -32,15 +32,20 @@ def register():
         email = request.form.get("email")
         username = request.form.get("username")
         password = request.form.get("password")
+        workspacename = request.form.get("workspacename")
 
         user = User.query.filter_by(email=email).first()
         if user is  None :
-            new_user = User(email=email,username=username,password=generate_password_hash(password))
+            new_user = User(
+                email=email,
+                username=username,
+                password=generate_password_hash(password),
+                workspace=workspacename 
+                )
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user,remember=True) #
-            if not current_user.hasWorkspace():
-                return redirect(url_for("main.createworkspace"))
+            return redirect(url_for("main.workspace"))
         else :
             return render_template("register.html",e_error="User with that email Already exists")
 

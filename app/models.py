@@ -10,28 +10,13 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(30) , nullable=False , unique=True)
     username = db.Column(db.String(30) , nullable=False)
     password = db.Column(db.String(200) , nullable=False)
-    workspace = db.Column(db.String(50) , nullable=True , default="[noworkspace]")
+    workspace = db.Column(db.String(50) , nullable=False)
     
 
-    def hasWorkspace(self):
-         return self.workspace != "[noworkspace]"
-    
-    @hybrid_property
-    def Wok(self):
-        return self.workspace
-
-    @Wok.setter
-    def Wok(self, wok):
-        print("="*100)
-        print("Workspace modified to : " , wok)
-        self.workspace = wok
-
-#    def is_active(self):
-#          return self.active
     
     def verify_password(self, password):
           return check_password_hash(self.password, password)
     
-    # this simulate User.toStrin()
+    # this simulate User.toString()
     def __repr__(self):
         return '<User %r>' % self.username
