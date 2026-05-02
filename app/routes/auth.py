@@ -44,14 +44,10 @@ def register():
                 )
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user,remember=True) #
-            return redirect(url_for("main.workspace"))
+            login_user(new_user) #
+            current_user.createWorkspaceIfNotExists()
+            return redirect("/workspace")
         else :
             return render_template("register.html",e_error="User with that email Already exists")
 
     return render_template("register.html")
-
-@auth_bp.route("/logout")
-@login_required
-def logout():
-    logout_user()

@@ -17,6 +17,19 @@ class User(db.Model,UserMixin):
     def verify_password(self, password):
           return check_password_hash(self.password, password)
     
+    def getWorkspacePath(self):
+         return f"app/static/uploads/workspaces/{self.workspace}"
+
+    def createWorkspaceIfNotExists(self):
+         import os
+         if os.path.exists(self.getWorkspacePath()) :
+              return
+         else :
+              os.mkdir(self.getWorkspacePath())
+              print("WORKSPACE CREATED")
+              return
+              
+
     # this simulate User.toString()
     def __repr__(self):
         return '<User %r>' % self.username
