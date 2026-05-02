@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    S'authentifier
+{% endblock title %}
+
+{% block content %}
+
+    <form action="/login" method="post" class="auth">
+        Email : <input type="email" name="email">
+        <br>
+        <span style="color : red">{{e_error}}</span>
+        <br>
+        Password : <input type="password" name="password">
+        <br>
+        <span style="color : red">{{p_error}}</span>
+        <br>
+        No accounts ? <a href="/register"> Create </a>
+        <br>
+        <button type="submit">Valider</button>
+    </form>
+
+{% endblock content %}

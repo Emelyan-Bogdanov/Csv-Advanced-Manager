@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    
+{% endblock title %}
+
+{% block content %}
+    <form action="/register" method="post" class="auth">
+        Username : <input type="text" name="username" id="">
+        <br>
+        <span style="color : red">{{u_error}}</span>
+        <br>
+        Email : <input type="email" name="email">
+        <br>
+        <span style="color : red">{{e_error}}</span>
+        <br>
+        Password : <input type="password" name="password">
+        <br>
+        <span style="color : red">{{p_error}}</span>
+        <br>
+        Already have accounts ? <a href="/login"> Login </a>
+        <br>
+        <button type="submit">Créer</button>
+    </form>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Gestion des fichiers .csv sans avoir acune expérience en programmation
+{% endblock title %}
+
+<!-- the list item -->
+ <ul>
+    {% if current_user.hasWorkspace %}
+        <li>
+            <a href="/workspace">My workspace</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="/createworkspace">Create Workspace</a>
+        </li>
+    {% endif %}
+
+ </ul>
+
+{% block content %}
+    
+{% endblock content %}
