@@ -18,7 +18,7 @@ class User(db.Model,UserMixin):
           return check_password_hash(self.password, password)
     
     def getWorkspacePath(self):
-         return f"app/static/uploads/workspaces/{self.workspace}"
+         return f"app/static/workspaces/{self.workspace}"
 
     def createWorkspaceIfNotExists(self):
          import os

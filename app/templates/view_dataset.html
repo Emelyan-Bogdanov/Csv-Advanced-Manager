@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Dataset Viewer
+{% endblock title%}
+
+{% block content %}
+    <table  class="table">
+        <thead>
+            <thead  scope="row">
+                <tr scope="row">
+                    {% for col in columns %}
+                    <td>{{col}}</td>
+                {% endfor %}
+                </tr>
+            </thead>
+        </thead>
+        <tbody>
+            {% for col in columns %}
+                <tr>
+                    {% for row in dataset[col] %}
+                        <td>{{row}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

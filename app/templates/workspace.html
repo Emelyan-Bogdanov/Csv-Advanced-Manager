@@ -5,5 +5,19 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Welcome to your workspace ! {{current_user.workspace}}</h1>
+    <!-- <h1>Welcome to your workspace ! {{current_user.username}}</h1> -->
+
+    <!-- afficher la list des datasets qui existent -->
+     <h2>Available Files</h2>
+    <ul class="list-group">
+        <li class="list-group-item active" aria-current="true">In your workspace</li>
+            <li class="list-group-item">
+                {% for dataset in datasets %}
+                    <a href="/datasets/{{dataset}}">
+                        {{dataset}}
+                    </a>
+                {% endfor %}
+            </li>
+    </ul>
+    </div>
 {% endblock content %}

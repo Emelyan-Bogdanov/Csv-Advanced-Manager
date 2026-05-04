@@ -1,5 +1,6 @@
-from flask import Blueprint , render_template , request , redirect , url_for
-from flask_login import login_required , logout_user , login_user , current_user
+from flask import Blueprint , render_template , request , redirect , current_app
+from flask_login import login_user , current_user
+from flask import url_for
 from ..models import User
 from ..extensions import db
 from werkzeug.security import generate_password_hash
@@ -19,8 +20,7 @@ def login():
         else :
             if user.verify_password(password) :
                 login_user(user)
-                print("="*50)
-                return redirect("/workspace")
+                return redirect(url_for("main.workspace"))
             else :
                 return render_template("login.html",p_error="password wrong")
     return render_template("login.html")
@@ -44,9 +44,12 @@ def register():
                 )
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user) #
+            
+            login_user(new_user)
+            # save action to log
+            # current_app.logger.info(f"[USER] new user created email={new_user.email}")
             current_user.createWorkspaceIfNotExists()
-            return redirect("/workspace")
+            return redirect(url_for("auth.login"))
         else :
             return render_template("register.html",e_error="User with that email Already exists")
 

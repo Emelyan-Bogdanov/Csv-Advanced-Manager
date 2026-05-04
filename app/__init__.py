@@ -21,6 +21,7 @@ def create_app():
     
 
     # configure logger
+    
 
     #  configure login manager
     loginM.init_app(app)
