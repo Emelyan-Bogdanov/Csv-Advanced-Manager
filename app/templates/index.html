@@ -1,23 +1,61 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Gestion des fichiers .csv sans avoir acune expérience en programmation
-{% endblock title %}
-
-<!-- the list item -->
- <ul>
-    {% if current_user.hasWorkspace %}
-        <li>
-            <a href="/workspace">My workspace</a>
-        </li>
-    {% else %}
-        <li>
-            <a href="/createworkspace">Create Workspace</a>
-        </li>
-    {% endif %}
-
- </ul>
-
 {% block content %}
-    
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock head %}
+
+
+
+<div class="global-container-workspace">
+    <!-- to show available sub-workspaces (the root workspace for this user) -->
+     <!-- each sub workspace should be in a proprt div>ul.workspaces -->
+
+    <h3>Workspaces</h3>
+    <div class="workspaces">
+        <ul class="workspaces">
+            <div class="workspace">
+                <a href="#">Test</a>
+                <a href="/view/{{dataset}}" class="tool">View</a>
+                <a href="/manage/{{dataset}}" class="tool">Manage</a>
+            </div>
+            {% for workspace in workspaces %}
+                <a href="/{{workspace}}" class="workspace">{{workspace}}</a>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="workspaces">
+        <div class="name">Workspace name</div>
+        <ul class="workspaces">
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            <div class="workspace">
+                <a href="#">Test</a>
+            </div>
+            {% for workspace in workspaces %}
+            <a href="/{{workspace}}" class="workspace">{{workspace}}</a>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+
 {% endblock content %}

@@ -1,0 +1,25 @@
+<h1>{{ csv_data.filename }}</h1>
+<p>Total rows: {{ csv_data.total_rows }}</p>
+
+{% if csv_data.success %}
+    <table>
+        <thead>
+            <tr>
+                {% for header in csv_data.headers %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in csv_data.rows %}
+                <tr>
+                    {% for header in csv_data.headers %}
+                        <td>{{ row[header] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p style="color: red;">Error: {{ csv_data.error }}</p>
+{% endif %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+    S'authentifier
+{% endblock title %}
+
+{% block content %}
+<!-- 
+    <form action="/login" method="post" class="auth">
+        Email : <input type="email" name="email">
+        <br>
+        <span style="color : red">{{e_error}}</span>
+        <br>
+        Password : <input type="password" name="password">
+        <br>
+        <span style="color : red">{{p_error}}</span>
+        <br>
+        No accounts ? <a href="/register"> Create </a>
+        <br>
+        <button type="submit">Valider</button>
+    </form> -->
+
+
+
+    <section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							<h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+							<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+									<input id="email" type="email" class="form-control" name="email" value="" required>
+									<span class="error">{{e_error}}</span>
+								</div>
+
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="password">Password</label>
+									<input id="password" type="password" class="form-control" name="password" required>
+								    <span class="error">{{p_error}}</span>
+								</div>
+								<div class="align-items-center d-flex">
+									<button type="submit" class="btn btn-primary ms-auto">
+										Login	
+									</button>
+								</div>
+							</form>
+						</div>
+						<div class="card-footer py-3 border-0">
+							<div class="text-center">
+								No account ? <a href="/register" class="text-dark">Create</a>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mt-5 text-muted">
+						Copyright &copy; 2017-2021 &mdash; Your Company 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock content %}

@@ -16,14 +16,14 @@ def login():
         # check if user exists
         user = User.query.filter_by(email=Email).first()
         if user is None :
-            return render_template("login.html",e_error="user not found")
+            return render_template("/auth/login.html",e_error="user not found")
         else :
             if user.verify_password(password) :
                 login_user(user)
                 return redirect(url_for("main.workspace"))
             else :
-                return render_template("login.html",p_error="password wrong")
-    return render_template("login.html")
+                return render_template("/auth/login.html",p_error="password wrong")
+    return render_template("/auth/login.html")
 
 
 @auth_bp.route("/register",methods=["POST","GET"])
@@ -40,7 +40,7 @@ def register():
                 email=email,
                 username=username,
                 password=generate_password_hash(password),
-                workspace=workspacename 
+                workspace_root=workspacename 
                 )
             db.session.add(new_user)
             db.session.commit()
@@ -53,4 +53,4 @@ def register():
         else :
             return render_template("register.html",e_error="User with that email Already exists")
 
-    return render_template("register.html")
+    return render_template("/auth/register.html")

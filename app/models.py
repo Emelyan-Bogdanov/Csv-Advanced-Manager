@@ -10,7 +10,7 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(30) , nullable=False , unique=True)
     username = db.Column(db.String(30) , nullable=False)
     password = db.Column(db.String(200) , nullable=False)
-    workspace = db.Column(db.String(50) , nullable=False)
+    workspace_root = db.Column(db.String(50) , nullable=False)
     
 
     
@@ -18,7 +18,7 @@ class User(db.Model,UserMixin):
           return check_password_hash(self.password, password)
     
     def getWorkspacePath(self):
-         return f"app/static/workspaces/{self.workspace}"
+         return f"app/static/workspaces/{self.workspace_root}"
 
     def createWorkspaceIfNotExists(self):
          import os
