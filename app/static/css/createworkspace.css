@@ -1,0 +1,90 @@
+.workspace-card {
+            width: 100%;
+            max-width: 450px;
+            border: none;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .workspace-card .card-body {
+            padding: 40px;
+        }
+        
+        .workspace-title {
+            font-weight: 600;
+            font-size: 2rem;
+            color: #4a4a4a;
+        }
+        
+        .workspace-subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+        
+        .form-control {
+            height: 55px;
+            border-radius: 14px;
+            border: 1px solid #dcdcdc;
+            padding-left: 18px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn-create {
+            height: 55px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: solid;
+        }
+        
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .workspace-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
+        }
+
+
+        @media (max-width: 576px) {
+            .workspace-card .card-body {
+                padding: 30px 25px;
+            }
+
+            .workspace-title {
+                font-size: 1.7rem;
+            }
+        }
+        .workspace-card {
+            position: fixed;
+            top : 50%;
+            left : 50%;
+            transform : translate(-50% , -50%);
+            flex-grow: 1;
+            outline: solid;
+        }

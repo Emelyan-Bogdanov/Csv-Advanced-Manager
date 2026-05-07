@@ -29,7 +29,9 @@ body {
     src: url('../fonts/Cairo-Medium.ttf');
     /*URL to font*/
 }
-
+ul {
+  list-style-type: none;
+}
 :root {
     --workspace-container-bg: #67C090;
     --workspace-element-bg: #215B63;
@@ -156,5 +158,9 @@ div.workspaces:not(:has(ul>div>a)) .empty {
     font-size: 30px;
 }
 div.workspaces:not(:has(ul>div>a)) .empty img {
-    width : 200px;
+    width : 150px;
+}
+
+div.workspaces:not(:has(ul>div>a)) {
+    opacity: 0.8;
 }

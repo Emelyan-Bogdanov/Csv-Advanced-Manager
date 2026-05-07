@@ -78,3 +78,32 @@ def upload_file():
 
     print(file.filename,"====="*50)
     return ""
+
+
+@workspace_bp.route("/newworkspace")
+def newworkspace():
+    return render_template("workspace/create.html")
+
+
+# receive a workskspace name through post request , and create its folder
+@workspace_bp.route("/createworkspace",methods=["POST"])
+def createworkspace():
+    # get the workspace name
+    workspacename = request.form.get("workspacename")
+    
+    # check if workspace exists already
+    path = f"{current_user.getWorkspacePath()}/{workspacename}"
+    if os.path.exists(path) :
+        return render_template("workspace/create.html",w_error="workspace already exists")
+    
+    os.mkdir(path)
+    
+    return render_template("index.html")
+
+@workspace_bp.route("/delete/<path>")
+def deleteSubWorkspace(path:str):
+    try :
+        current_user.deleteWorkspace(path)
+    except Exception as e:
+        print(f"Can't delete {path} because : {str(e)}")
+    return redirect(url_for("main.index",deleted=path)) # delete then return to the home page

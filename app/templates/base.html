@@ -11,15 +11,31 @@
     {% endblock head %}
 </head>
 <body>
-    <nav>
-        <ul>
+    <nav class="navbar navbar-light bg-light">
+        <ul class="d-flex">
             {% if current_user.is_authenticated %}
-                <li>
-                    <a href="/import">Upload dataset</a>
+            <ul class="navbar-nav d-flex flex-row align-items-center gap-2">
+                    <li class="nav-item"><a href="/" class="btn btn-outline-success"><i class="bi bi-box-arrow-right me-1"></i>
+                            Home </a>
+                    </li>
+
+                <li class="nav-item">
+                    <a href="/import" class="btn btn-success"><i class="bi bi-upload me-1"></i>
+                        Upload Dataset </a>
                 </li>
-                <li>
-                    <a href="/logout">Log out</a>
+
+                 {% if request.path != '/newworkspace' %}
+                    <li class="nav-item"><a href="/newworkspace" class="btn btn-outline-primary"><i class="bi bi-folder-plus me-1"></i>
+                            New Workspace </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item"><a href="/logout" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right me-1"></i>
+                        Log Out </a>
                 </li>
+
+
+            </ul>
             {% endif %}
         </ul>
     </nav>

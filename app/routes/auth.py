@@ -52,7 +52,7 @@ def register():
             current_user.createWorkspaceIfNotExists()
             return redirect(url_for("auth.login"))
         else :
-            return render_template("register.html",e_error="User with that email Already exists")
+            return render_template("auth/register.html",e_error="User with that email Already exists")
 
     return render_template("/auth/register.html")
 

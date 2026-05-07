@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+
+{% block head %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='css/createworkspace.css')}}">
+{% endblock head %}
+
+{% block content %}
+
+    <div class="card workspace-card">
+        <div class="card-body text-center">
+
+            <div class="workspace-icon">
+                🚀
+            </div>
+
+            <h1 class="workspace-title mb-2">
+                Create Workspace
+            </h1>
+
+            <p class="workspace-subtitle">
+                Start organizing your projects beautifully.
+            </p>
+
+            <form action="/createworkspace" method="POST">
+                
+                <div class="mb-4">
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="workspacename"
+                        placeholder="Enter workspace name"
+                        required
+                        autocomplete="off"
+                    />
+                </div>
+                <button type="submit" class="btn btn-create w-100">
+                    Create Workspace
+                </button>
+            </form>
+            {% if w_error %}
+                <script>
+                    alert("Workspace already exists")
+                </script>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

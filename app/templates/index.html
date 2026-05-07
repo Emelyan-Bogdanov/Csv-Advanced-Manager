@@ -13,6 +13,8 @@
      <!-- each sub workspace should be in a proprt div>ul.workspaces -->
 
     <h3>Workspaces</h3>
+    <!-- to create new workspaces -->
+    
     {% for workspace in workspaces %}
     <div class="workspaces">
             <div class="name">{{workspace["workspace"]}}</div>
@@ -23,6 +25,11 @@
                     <br>
                     <h4>Please upload some datasets</h4>
                     <img src="{{url_for('static',filename='imgs/emptyworkspace.png')}}" alt="">
+                </div>
+                <div>
+                    <div>
+                            <a class="btn btn-danger" href="/delete/{{workspace['workspace']}}">Delete Workspace</a>
+                    </div>
                 </div>
                 <!-- else => loop over datasets -->
                 {% for dataset in workspace['datasets'] %}
@@ -36,26 +43,12 @@
         </div>
     {% endfor %}
 
-    <h3>Test compo</h3>
-    <!-- start test -->
-    <div class="workspaces">
-        <div class="name">Workspace name</div>
-        <ul class="workspaces">
-            <div class="workspace">
-                <a href="#" class="title" title="Dataset name">Test</a>
-                <a href="/view/{{dataset}}" class="tool">View</a>
-                <a href="/manage/{{dataset}}" class="tool">Manage</a>
-            </div>
-            
-            <div class="workspace">
-                <a href="#" class="title" title="Dataset name">Test</a>
-                <a href="/view/{{dataset}}" class="tool">View</a>
-                <a href="/manage/{{dataset}}" class="tool">Manage</a>
-            </div>
-        </ul>
-    </div>
-    <!-- end test -->
-    
+    <!-- alert that a workspace is deleted -->
+    {% if deleted %}
+        <script>
+            alert('Workspace {{deleted}} deleted successfully')
+        </script>
+    {% endif %}
 </div>
 
 
