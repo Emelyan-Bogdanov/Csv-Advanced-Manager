@@ -9,10 +9,10 @@ loginM = LoginManager()
 
 
 @loginM.user_loader
-# THIS IS IMPORTANT
-def load_user(email):
+def load_user(user_id):
     from .models import User
-    return User.query.filter_by(email=email).first()
+    return User.query.get(int(user_id))
+
 
 
 # redirect to /login endpoint if not logged in

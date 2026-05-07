@@ -3,54 +3,67 @@
     margin: 0;
 }
 
-html , body {
+html,
+body {
     width: 100%;
     height: 100%;
 }
+
 @font-face {
-    font-family: 'Cairo Extra Bold'; /*a name to be used later*/
-    src: url('../fonts/Cairo-ExtraBold.ttf'); /*URL to font*/
+    font-family: 'Cairo Extra Bold';
+    /*a name to be used later*/
+    src: url('../fonts/Cairo-ExtraBold.ttf');
+    /*URL to font*/
 }
+
 @font-face {
-    font-family: 'Cairo Light'; /*a name to be used later*/
-    src: url('../fonts/Cairo-Light.ttf'); /*URL to font*/
+    font-family: 'Cairo Light';
+    /*a name to be used later*/
+    src: url('../fonts/Cairo-Light.ttf');
+    /*URL to font*/
 }
+
 @font-face {
-    font-family: 'Cairo Medium'; /*a name to be used later*/
-    src: url('../fonts/Cairo-Medium.ttf'); /*URL to font*/
+    font-family: 'Cairo Medium';
+    /*a name to be used later*/
+    src: url('../fonts/Cairo-Medium.ttf');
+    /*URL to font*/
 }
+
 :root {
-    --workspace-container-bg : #67C090;
-    --workspace-element-bg : #215B63;
-    --workspace-element-fg : #F7DD7D;
-    --workspace-name-fg : #F5F5F5;
-    --cairo-extra-bold : 'Cairo Extra Bold';
-    --cairo-light : "Cairo Light";
-    --cairo-meduim : "Cairo Medium";
+    --workspace-container-bg: #67C090;
+    --workspace-element-bg: #215B63;
+    --workspace-element-fg: #F7DD7D;
+    --workspace-name-fg: #F5F5F5;
+    --cairo-extra-bold: 'Cairo Extra Bold';
+    --cairo-light: "Cairo Light";
+    --cairo-meduim: "Cairo Medium";
 }
 
 body {
     display: flex;
     flex-direction: column;
     padding-inline: 20px;
-    font-family: var(--cairo-extra-bold),Verdana, Geneva, Tahoma, sans-serif;
+    font-family: var(--cairo-extra-bold), Verdana, Geneva, Tahoma, sans-serif;
 }
+
 body div.workspaces {
     outline: solid 1px black;
     min-height: 200px;
     padding: 20px;
-    margin-block : 10px ;
-    background: var(--workspace-container-bg) ;
+    margin-block: 10px;
+    background: var(--workspace-container-bg);
     display: flex;
     flex-direction: column;
 }
+
 div.workspaces .name {
     font-family: var(--cairo-extra-bold);
     font-size: 28px;
-    color : var( --workspace-element-bg);
+    color: var(--workspace-element-bg);
 }
 
-body div.workspaces ul.workspaces {
+body div.workspaces ul {
     margin-block: 5px;
     flex-grow: 1;
     display: flex;
@@ -66,18 +79,18 @@ ul.workspaces::-webkit-scrollbar {
 }
 
 ul.workspaces::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }
 
 ul.workspaces::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-body div.workspaces ul.workspaces .workspace {
+body div.workspaces ul .workspace {
     list-style: none;
-    font-family: var(--cairo-medium),Verdana, Geneva, Tahoma, sans-serif;
+    font-family: var(--cairo-medium), Verdana, Geneva, Tahoma, sans-serif;
     padding: 5px;
     font-size: 25px;
     cursor: pointer;
@@ -87,17 +100,61 @@ body div.workspaces ul.workspaces .workspace {
     margin-block: 5px;
     display: flex;
     align-items: center;
+    /*  */
+    
 }
 
-body div.workspaces ul.workspaces .workspace a {
-    color : var(--workspace-element-fg);
+body div.workspaces ul .workspace a {
+    color: var(--workspace-element-fg);
     text-decoration: none;
     flex-grow: 7;
 }
 
-body div.workspaces ul.workspaces .workspace a.tool {
+body div.workspaces ul .workspace .tool {
+    background-color: var(--workspace-name-fg);
     flex-grow: 1;
-    width: 20px;
+    width: 10px;
     font-size: 20px;
-    color : var(--workspace-container-bg);
+    color: var(--workspace-container-bg);
+    margin: 2px;
+    text-align: center;
+    /*  */
+    display: inline-block;
+    margin-right: 15px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+body div.workspaces ul.workspaces .workspace .tool:hover {
+    background-color: #0056b3;
+}
+
+ 
+
+.title {
+    font-size: 24px;
+    color: #333333;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: block;
+}
+.empty {
+    display: none;
+}
+div.workspaces:not(:has(ul>div>a)) .empty{
+    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div.workspaces:not(:has(ul>div>a)) .empty {
+    color : #E03F4F;
+    font-size: 30px;
+}
+div.workspaces:not(:has(ul>div>a)) .empty img {
+    width : 200px;
 }

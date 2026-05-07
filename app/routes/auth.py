@@ -20,7 +20,7 @@ def login():
         else :
             if user.verify_password(password) :
                 login_user(user)
-                return redirect(url_for("main.workspace"))
+                return redirect(url_for("main.index"))
             else :
                 return render_template("/auth/login.html",p_error="password wrong")
     return render_template("/auth/login.html")
@@ -42,6 +42,7 @@ def register():
                 password=generate_password_hash(password),
                 workspace_root=workspacename 
                 )
+            new_user.createWorkspaceIfNotExists()
             db.session.add(new_user)
             db.session.commit()
             
@@ -54,3 +55,9 @@ def register():
             return render_template("register.html",e_error="User with that email Already exists")
 
     return render_template("/auth/register.html")
+
+@auth_bp.route("/logout")
+def logout():
+    from flask_login import logout_user
+    logout_user()
+    return redirect(url_for("auth.login"))

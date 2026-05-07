@@ -44,13 +44,6 @@ const uploadArea = document.getElementById('uploadArea');
         function handleFileSelect(file) {
             clearMessages();
 
-            // Validate file type
-            if (!file.name.endsWith('.csv')) {
-                showError('Please select a CSV file');
-                fileInput.value = '';
-                return;
-            }
-
             // Validate file size (max 50MB)
             const maxSize = 50 * 1024 * 1024;
             if (file.size > maxSize) {

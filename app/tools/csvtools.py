@@ -38,11 +38,6 @@ def read_csv_file(file_path: str) -> Dict[str, Any]:
             result['error'] = f"File not found: {file_path}"
             return result
         
-        # Validate it's a CSV file
-        if path.suffix.lower() != '.csv':
-            result['error'] = f"File must be a CSV file, got: {path.suffix}"
-            return result
-        
         result['filename'] = path.name
         
         # Read the CSV file

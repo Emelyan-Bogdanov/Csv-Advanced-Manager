@@ -13,48 +13,49 @@
      <!-- each sub workspace should be in a proprt div>ul.workspaces -->
 
     <h3>Workspaces</h3>
+    {% for workspace in workspaces %}
     <div class="workspaces">
-        <ul class="workspaces">
-            <div class="workspace">
-                <a href="#">Test</a>
-                <a href="/view/{{dataset}}" class="tool">View</a>
-                <a href="/manage/{{dataset}}" class="tool">Manage</a>
-            </div>
-            {% for workspace in workspaces %}
-                <a href="/{{workspace}}" class="workspace">{{workspace}}</a>
-            {% endfor %}
-        </ul>
-    </div>
+            <div class="name">{{workspace["workspace"]}}</div>
+            <ul class="datasets">
+                <!-- in case the user has no datasets => show this -->
+                <div class="empty">
+                    This workspace is Empty!
+                    <br>
+                    <h4>Please upload some datasets</h4>
+                    <img src="{{url_for('static',filename='imgs/emptyworkspace.png')}}" alt="">
+                </div>
+                <!-- else => loop over datasets -->
+                {% for dataset in workspace['datasets'] %}
+                    <div class="workspace"> <!-- the dataset compo -->
+                        <a href="#" class="title">{{dataset}}</a>
+                        <a href="/view/{{dataset}}" class="tool">View</a>
+                        <a href="/manage/{{dataset}}" class="tool">Manage</a>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+    <h3>Test compo</h3>
+    <!-- start test -->
     <div class="workspaces">
         <div class="name">Workspace name</div>
         <ul class="workspaces">
             <div class="workspace">
-                <a href="#">Test</a>
+                <a href="#" class="title" title="Dataset name">Test</a>
+                <a href="/view/{{dataset}}" class="tool">View</a>
+                <a href="/manage/{{dataset}}" class="tool">Manage</a>
             </div>
+            
             <div class="workspace">
-                <a href="#">Test</a>
+                <a href="#" class="title" title="Dataset name">Test</a>
+                <a href="/view/{{dataset}}" class="tool">View</a>
+                <a href="/manage/{{dataset}}" class="tool">Manage</a>
             </div>
-            <div class="workspace">
-                <a href="#">Test</a>
-            </div>
-            <div class="workspace">
-                <a href="#">Test</a>
-            </div>
-            <div class="workspace">
-                <a href="#">Test</a>
-            </div>
-            <div class="workspace">
-                <a href="#">Test</a>
-            </div>
-            <div class="workspace">
-                <a href="#">Test</a>
-            </div>
-            {% for workspace in workspaces %}
-            <a href="/{{workspace}}" class="workspace">{{workspace}}</a>
-            {% endfor %}
         </ul>
     </div>
-
+    <!-- end test -->
+    
 </div>
 
 

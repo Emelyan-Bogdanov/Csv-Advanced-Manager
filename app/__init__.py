@@ -17,6 +17,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
+    app.config['LOGIN_DISABLED '] = False
     
     # configure blueprints
     app.register_blueprint(auth_bp)

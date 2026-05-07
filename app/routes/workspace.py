@@ -3,20 +3,50 @@ from app.tools.general import allowed_file
 from werkzeug.utils import secure_filename
 from flask import Blueprint , render_template , request , jsonify , url_for
 from flask import current_app
-from config import WORKSPACES_PATH
+
+
+from functools import wraps
+from flask import redirect, url_for
+from flask_login import current_user
+
+
 import os
 
+ALLOWED_EXTENSIONS = {'csv'}
+WORKSPACES_PATH = "app/static/workspaces/"
+
+
+# create a decorator in case that the workspace deleted or not found
+def workspace_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+
+        # make sure user is authenticated first (important)
+        if not current_user.is_authenticated:
+            return redirect(url_for("auth.login"))
+        print("-"*20)
+        # check workspace
+        if not os.path.exists(current_user.getWorkspacePath()):
+            # create workspace
+            current_user.createWorkspaceIfNotExists()
+            print("=======================USER WORKSPACE RE CREATED")
+
+        return f(*args, **kwargs)
+
+    return wrapper
 
 workspace_bp = Blueprint("workspace",__name__)
 
 
 
 # View the dataset
+@workspace_required
 @workspace_bp.route('/view/<filename>')
 def view_csv(filename):
     data = read_csv_file(f"{WORKSPACES_PATH}{filename}")
     return render_template('data_view/csv_viewer.html', csv_data=data)
 
+@workspace_required
 @workspace_bp.route('/view/<filename>/page/<int:page>')
 def view_csv_paginated(filename, page):
     data = read_csv_file_paginated(f"{WORKSPACES_PATH}{filename}", page=page)
@@ -25,9 +55,9 @@ def view_csv_paginated(filename, page):
 
 # afficher la list des datasets & dossiers
 @workspace_bp.route("/workspace")
+@workspace_required
 def workspace():
     # get datasets
-    from ...config import ALLOWED_EXTENSIONS
     from app import UPLOAD_FOLDER
     import os
     print(os.listdir())
@@ -45,39 +75,6 @@ def upload_file():
         return jsonify({'error': 'No file provided'}), 400
     
     file = request.files['file']
-    
-    # Check if file is selected
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'}), 400
-    
-    # Validate file extension
-    if not allowed_file(file.filename):
-        return jsonify({'error': 'Only CSV files are allowed'}), 400
-    
-    try:
-        # Secure the filename
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-        
-        # Save the file
-        file.save(filepath)
-        
-        # Read and validate CSV
-        csv_data = read_csv_file(filepath)
-        
-        if not csv_data['success']:
-            # Delete file if it's invalid
-            os.remove(filepath)
-            return jsonify({'error': csv_data['error']}), 400
-        
-        # Return success response
-        return jsonify({
-            'success': True,
-            'filename': filename,
-            'total_rows': csv_data['total_rows'],
-            'headers': csv_data['headers'],
-            'redirect_url': url_for('data_view.csv_viewer', filename=filename)
-        }), 200
-    
-    except Exception as e:
-        return jsonify({'error': f'Server error: {str(e)}'}), 500
+
+    print(file.filename,"====="*50)
+    return ""

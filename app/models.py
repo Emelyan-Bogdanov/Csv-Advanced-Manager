@@ -18,14 +18,15 @@ class User(db.Model,UserMixin):
           return check_password_hash(self.password, password)
     
     def getWorkspacePath(self):
+         self.createWorkspaceIfNotExists()
          return f"app/static/workspaces/{self.workspace_root}"
 
     def createWorkspaceIfNotExists(self):
          import os
-         if os.path.exists(self.getWorkspacePath()) :
+         if os.path.exists(f"app/static/workspaces/{self.workspace_root}") :
               return
          else :
-              os.mkdir(self.getWorkspacePath())
+              os.mkdir(f"app/static/workspaces/{self.workspace_root}")
               print("WORKSPACE CREATED")
               return
               
