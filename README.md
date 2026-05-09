@@ -15,7 +15,7 @@
 │  │                                                           │    │
 │  │  ┌──────────────────────────────────────────────────┐   │    │
 │  │  │    Part 1: CSV Management Panel                 │   │    │
-│  │  │  -✔️ Upload & File Explorer                       │   │    │
+│  │  │  - Upload & File Explorer                       │   │    │
 │  │  │  - Data Cleaning Tools                          │   │    │
 │  │  │  - Column/Row Operations                        │   │    │
 │  │  │  - Data Transformation                          │   │    │

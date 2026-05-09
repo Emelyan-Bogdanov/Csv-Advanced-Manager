@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock title %} </title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/all.css')}}">
+    <link href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" >
+    {% block head %}
+        <!-- to add custom things -->
+    {% endblock head %}
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <ul class="d-flex">
+            {% if current_user.is_authenticated %}
+            <ul class="navbar-nav d-flex flex-row align-items-center gap-2">
+                    <li class="nav-item"><a href="/" class="btn btn-outline-success"><i class="bi bi-box-arrow-right me-1"></i>
+                            Home </a>
+                    </li>
+
+                <li class="nav-item">
+                    <a href="/import" class="btn btn-success"><i class="bi bi-upload me-1"></i>
+                        Upload Dataset </a>
+                </li>
+
+                 {% if request.path != '/newworkspace' %}
+                    <li class="nav-item"><a href="/newworkspace" class="btn btn-outline-primary"><i class="bi bi-folder-plus me-1"></i>
+                            New Workspace </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item"><a href="/logout" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right me-1"></i>
+                        Log Out </a>
+                </li>
+
+
+            </ul>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
