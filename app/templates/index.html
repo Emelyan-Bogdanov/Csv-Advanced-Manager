@@ -36,10 +36,14 @@
                 {% for dataset in workspace['datasets'] %}
                     <div class="workspace"> <!-- the dataset compo -->
                         <a href="#" class="title">{{dataset}}</a>
-                        <a href="/view/{{dataset}}" class="tool">View</a>
-                        <a href="/raw/{{workspace['workspace']}}/{{dataset}}" class="tool">View raw</a>
                         
-                        <a href="/manage/{{dataset}}" class="tool">Manage</a>
+                            {% if '.csv' in dataset %}
+                                <a href="/view/{{workspace['workspace']}}/{{dataset}}" class="tool">View</a>
+                                <a href="/manage/{{dataset}}" class="tool">Manage</a>
+                            {% endif %}
+
+                        <a href="/raw/{{workspace['workspace']}}/{{dataset}}" class="tool">View raw</a>
+
                     </div>
                 {% endfor %}
             </ul>

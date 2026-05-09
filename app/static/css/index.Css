@@ -129,6 +129,8 @@ body div.workspaces ul .workspace .tool {
     text-decoration: none;
     border-radius: 3px;
     transition: background-color 0.3s;
+
+    min-width: 50px;
 }
 
 body div.workspaces ul.workspaces .workspace .tool:hover {
@@ -143,6 +145,10 @@ body div.workspaces ul.workspaces .workspace .tool:hover {
     text-decoration: none;
     margin-bottom: 10px;
     display: block;
+
+    white-space: nowrap;            /* Prevents the text from wrapping to the next line */
+    overflow: hidden;               /* Hides overflowing text */
+    text-overflow: ellipsis;        /* Adds "..." at the end of overflowing text */   
 }
 .empty {
     display: none;
@@ -170,3 +176,5 @@ div.workspaces:not(:has(ul>div>a)) {
 div:has(.add-files){
     margin: 3px;
 }
+
+

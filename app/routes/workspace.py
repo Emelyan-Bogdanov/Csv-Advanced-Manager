@@ -38,21 +38,6 @@ def workspace_required(f):
 workspace_bp = Blueprint("workspace",__name__)
 
 
-
-# View the dataset
-@workspace_required
-@workspace_bp.route('/view/<filename>')
-def view_csv(filename):
-    data = read_csv_file(f"{WORKSPACES_PATH}{filename}")
-    return render_template('data_view/csv_viewer.html', csv_data=data)
-
-@workspace_required
-@workspace_bp.route('/view/<filename>/page/<int:page>')
-def view_csv_paginated(filename, page):
-    data = read_csv_file_paginated(f"{WORKSPACES_PATH}{filename}", page=page)
-    return render_template('data_view/csv_viewer.html', csv_data=data)
-
-
 # afficher la list des datasets & dossiers
 @workspace_bp.route("/workspace")
 @workspace_required

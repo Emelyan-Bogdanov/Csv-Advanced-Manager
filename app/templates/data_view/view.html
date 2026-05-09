@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}View CSV - {{ csv_data.filename if csv_data else 'Error' }}{% endblock %}
+
+{% block content %}
+<div class="csv-viewer-container">
+    {% if csv_data and not csv_data.error %}
+        <div class="csv-header">
+            <div class="csv-title-section">
+                <h1 class="csv-filename">📄 {{ csv_data.filename }}</h1>
+                <div class="csv-stats">
+                    <span class="stat-badge">
+                        <strong>Rows:</strong> {{ csv_data.total_rows }}
+                    </span>
+                    <span class="stat-badge">
+                        <strong>Columns:</strong> {{ csv_data.total_columns }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {% if csv_data.headers %}
+            <div class="csv-table-wrapper">
+                <table class="csv-table">
+                    <thead>
+                        <tr class="table-header-row">
+                            {% for header in csv_data.headers %}
+                                <th class="table-header-cell">
+                                    <span class="header-text">{{ header }}</span>
+                                    {% if csv_data.data_types and header in csv_data.data_types %}
+                                        <span class="data-type" title="Data type">
+                                            {{ csv_data.data_types[header] }}
+                                        </span>
+                                    {% endif %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if csv_data.rows %}
+                            {% for row in csv_data.rows[:csv_data.preview_rows] %}
+                                <tr class="table-row">
+                                    {% for header in csv_data.headers %}
+                                        <td class="table-cell">
+                                            {% if row[header] is none or row[header] == '' %}
+                                                <span class="null-value">NULL</span>
+                                            {% else %}
+                                                {{ row[header] }}
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="{{ csv_data.headers|length }}" class="empty-message">
+                                    No data available
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if csv_data.total_rows > csv_data.preview_rows %}
+                <div class="pagination-info">
+                    <p>Showing {{ csv_data.preview_rows }} of {{ csv_data.total_rows }} rows</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-warning">
+                <strong>⚠️ Warning:</strong> No columns found in the CSV file.
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Error State -->
+        <div class="error-container">
+            <div class="error-icon">❌</div>
+            <h2 class="error-title">Unable to Load CSV File</h2>
+            <p class="error-message">
+                {{ error_message if error_message else 'An unknown error occurred while trying to load the CSV file.' }}
+            </p>
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary">← Back to Dashboard</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .csv-viewer-container {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Header Section */
+    .csv-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+
+    .csv-title-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .csv-filename {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        word-break: break-word;
+    }
+
+    .csv-stats {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.95rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Table Wrapper */
+    .csv-table-wrapper {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        margin-bottom: 2rem;
+    }
+
+    .csv-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    /* Table Header */
+    .table-header-row {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .table-header-cell {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        white-space: nowrap;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .table-header-cell:last-child {
+        border-right: none;
+    }
+
+    .header-text {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .data-type {
+        display: block;
+        font-size: 0.75rem;
+        opacity: 0.8;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Table Body */
+    .table-row {
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.2s ease;
+    }
+
+    .table-row:hover {
+        background-color: #f5f5f5;
+    }
+
+    .table-row:last-child {
+        border-bottom: none;
+    }
+
+    .table-cell {
+        padding: 1rem;
+        text-align: left;
+        word-wrap: break-word;
+        max-width: 300px;
+        color: #333;
+    }
+
+    .null-value {
+        color: #999;
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #999;
+        padding: 2rem !important;
+    }
+
+    /* Pagination Info */
+    .pagination-info {
+        text-align: center;
+        color: #666;
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    /* Error State */
+    .error-container {
+        background: white;
+        border-radius: 8px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .error-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .error-title {
+        color: #d32f2f;
+        margin: 0 0 1rem 0;
+        font-size: 1.8rem;
+    }
+
+    .error-message {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Alert Styles */
+    .alert {
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .alert-warning {
+        background-color: #fff3cd;
+        border: 1px solid #ffc107;
+        color: #856404;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .csv-viewer-container {
+            padding: 1rem;
+        }
+
+        .csv-header {
+            padding: 1.5rem;
+        }
+
+        .csv-title-section {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .csv-filename {
+            font-size: 1.5rem;
+        }
+
+        .csv-stats {
+            width: 100%;
+        }
+
+        .table-cell,
+        .table-header-cell {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .csv-table-wrapper {
+            border-radius: 4px;
+        }
+
+        .error-icon {
+            font-size: 3rem;
+        }
+
+        .error-title {
+            font-size: 1.4rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .csv-filename {
+            font-size: 1.2rem;
+        }
+
+        .table-header-cell {
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .table-cell {
+            padding: 0.5rem 0.25rem;
+            max-width: 150px;
+            font-size: 0.85rem;
+        }
+    }
+</style>
+{% endblock %}
