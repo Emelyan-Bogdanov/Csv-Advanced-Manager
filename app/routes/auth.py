@@ -46,7 +46,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             
-            login_user(new_user)
+            login_user(new_user) # if you want to log in from sign up then redirect directly to home page
             # save action to log
             # current_app.logger.info(f"[USER] new user created email={new_user.email}")
             current_user.createWorkspaceIfNotExists()

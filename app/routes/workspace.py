@@ -65,21 +65,6 @@ def workspace():
     return render_template("workspace/workspace.html",datasets=datasets)
 
 
-
-@workspace_bp.route('/upload', methods=['POST'])
-def upload_file():
-    """Handle CSV file upload"""
-    
-    # Check if file is in request
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
-    
-    file = request.files['file']
-
-    print(file.filename,"====="*50)
-    return ""
-
-
 @workspace_bp.route("/newworkspace")
 def newworkspace():
     return render_template("workspace/create.html")
@@ -98,7 +83,7 @@ def createworkspace():
     
     os.mkdir(path)
     
-    return render_template("index.html")
+    return redirect(url_for("main.index"))
 
 @workspace_bp.route("/delete/<path>")
 def deleteSubWorkspace(path:str):
@@ -107,3 +92,30 @@ def deleteSubWorkspace(path:str):
     except Exception as e:
         print(f"Can't delete {path} because : {str(e)}")
     return redirect(url_for("main.index",deleted=path)) # delete then return to the home page
+
+
+# add files & datasets to the workspace
+@workspace_bp.route("/addfiles/<filename>",methods=["POST"])
+def addfiles():
+    return ""
+
+
+
+
+@workspace_bp.route("/add/<workspace>")
+def add2workspace(workspace:str):
+    # show the import page
+    return render_template("workspace/add2workspace.html",workspace=workspace)
+
+@workspace_bp.route("/addFiles",methods=["POST"])
+def addFiles():
+    workspace = request.form.get("workspace")
+    if "fileimported" in request.files :
+        file = request.files["fileimported"]
+        filename = secure_filename(file.filename)
+        path = f"{current_user.getWorkspacePath()}/{workspace}/{filename}"
+        file.save(path)
+        from colorama import Fore , Style
+        print(f"{Fore.GREEN} file saved ")
+        return redirect(url_for("main.index"))
+    return request.files

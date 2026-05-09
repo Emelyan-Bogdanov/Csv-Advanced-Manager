@@ -164,3 +164,9 @@ div.workspaces:not(:has(ul>div>a)) .empty img {
 div.workspaces:not(:has(ul>div>a)) {
     opacity: 0.8;
 }
+.add-files {
+    outline: solid 2px;
+}
+div:has(.add-files){
+    margin: 3px;
+}

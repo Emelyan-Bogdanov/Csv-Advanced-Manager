@@ -36,17 +36,11 @@ class User(db.Model,UserMixin):
          # if exits => delete
          from colorama import Fore , Style
          import os
-         import os
          import stat
          import shutil
 
-         def remove_readonly(func, path, _):
-              os.chmod(path, stat.S_IWRITE)
-              func(path)
-              shutil.rmtree(
-                   f"{root}/{path}",
-                   onerror=remove_readonly
-              )
+         os.chmod(path, stat.S_IWRITE)
+         os.remove(f"{root}/{path}")
          print("===========>",f"{root}/{path}")
          if os.path.exists(f"{root}/{path}") :
                os.remove(f"{root}/{path}")

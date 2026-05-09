@@ -28,6 +28,7 @@
                 </div>
                 <div>
                     <div>
+                            <a class="btn btn-info add-files" href="/add/{{workspace['workspace']}}">add Files</a>
                             <a class="btn btn-danger" href="/delete/{{workspace['workspace']}}">Delete Workspace</a>
                     </div>
                 </div>
@@ -36,6 +37,8 @@
                     <div class="workspace"> <!-- the dataset compo -->
                         <a href="#" class="title">{{dataset}}</a>
                         <a href="/view/{{dataset}}" class="tool">View</a>
+                        <a href="/raw/{{workspace['workspace']}}/{{dataset}}" class="tool">View raw</a>
+                        
                         <a href="/manage/{{dataset}}" class="tool">Manage</a>
                     </div>
                 {% endfor %}
